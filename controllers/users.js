@@ -129,9 +129,12 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const userData = await userModel.findOne({ email }).lean();
+    // res.json(userData);
+    // return
     if (userData) {
       const { firstName, lastName } = userData;
       const isPasswordMatch = await bcrypt.compare(password, userData.password);
+      console.log('isPasswordMatch :>> ', isPasswordMatch);
       if (isPasswordMatch) {
         const payload = {
           firstName,
